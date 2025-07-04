@@ -7,11 +7,11 @@ export default function AdminLogin() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const res = await fetch(\`\${import.meta.env.VITE_API_BASE_URL}/login\`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id, password })
-    });
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id, password })
+  });
     const data = await res.json();
     if (data.role === "admin") {
       navigate("/admin/dashboard");

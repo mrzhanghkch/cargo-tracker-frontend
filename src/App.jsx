@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
+import ExcelUpload from './ExcelUpload';
 
 export default function App() {
   const [user_id, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [role, setRole] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, password })
       });
 
@@ -22,9 +22,7 @@ export default function App() {
       if (data.role === "admin") {
         setRole("admin");
         setMessage("✅ Welcome Admin");
-      } else if (data.role === "customer") {
-        setRole("customer");
-        setMessage(`✅ Welcome Customer ${data.customer_id}`);
+        setLoggedIn(true);
       } else {
         setMessage("❌ Access denied");
       }
@@ -33,6 +31,10 @@ export default function App() {
       setMessage("❌ Login failed. Please check your credentials.");
     }
   };
+
+  if (loggedIn && role === "admin") {
+    return <ExcelUpload />;
+  }
 
   return (
     <div style={{ padding: "2rem", textAlign: "center", fontFamily: "Arial" }}>
@@ -54,7 +56,7 @@ export default function App() {
 
       <button onClick={handleLogin}>Login</button>
 
-      <div style={{ marginTop: "1rem", color: role === 'admin' || role === 'customer' ? 'green' : 'red' }}>
+      <div style={{ marginTop: "1rem", color: role === 'admin' ? 'green' : 'red' }}>
         {message}
       </div>
     </div>

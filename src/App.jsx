@@ -1,1 +1,3 @@
-import { login } from './api';
+export default function App() {
+  // your component code here
+}

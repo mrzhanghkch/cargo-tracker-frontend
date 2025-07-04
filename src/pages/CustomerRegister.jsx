@@ -1,26 +1,16 @@
-import React, { useState } from 'react';
-
-export default function CustomerRegister() {
-  const [form, setForm] = useState({ name: '', password: '' });
-  const [msg, setMsg] = useState('');
-
-  const register = async () => {
-    const res = await fetch(\`\${import.meta.env.VITE_API_BASE_URL}/register_customer\`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
+import React,{useState}from 'react';
+export default function CustomerRegister(){
+  const [f,setF]=useState({name:'',password:''}),[msg,setMsg]=useState('');
+  const reg=async()=>{
+    const r=await fetch(`${import.meta.env.VITE_API_BASE_URL}/register_customer`,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(f)
     });
-    const data = await res.json();
-    setMsg(data.message || 'Registered');
+    const d=await r.json(); setMsg(d.message||'Registered');
   };
-
-  return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h2>Register as Customer</h2>
-      <input placeholder="Customer Name" onChange={e => setForm({...form, name: e.target.value})} /><br/>
-      <input type="password" placeholder="Password" onChange={e => setForm({...form, password: e.target.value})} /><br/>
-      <button onClick={register}>Register</button>
-      <p>{msg}</p>
-    </div>
-  );
+  return(<div style={{padding:'2rem',textAlign:'center'}}>
+    <h2>Customer Register</h2>
+    <input placeholder="Name" onChange={e=>setF({...f,name:e.target.value})}/><br/>
+    <input type="password" placeholder="Password" onChange={e=>setF({...f,password:e.target.value})}/><br/>
+    <button onClick={reg}>Register</button><p>{msg}</p>
+  </div>);
 }

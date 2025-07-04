@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
@@ -17,6 +17,7 @@ export default function App() {
         <Route path="/register" element={<CustomerRegister />} />
         <Route path="/login" element={<CustomerLogin />} />
         <Route path="/customer" element={<CustomerDashboard />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
